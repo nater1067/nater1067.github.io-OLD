@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Nate.Vegas</title>
+  <title>Spinning Up Symfony 2 Development Environments With Vagrant - Nate.Vegas</title>
   <meta name="author" content="Nate Turner">
 
   
-  <meta name="description" content="Use Foxy Proxy to make your life easier (Mac OSX/ Linux) If you’re like me and you don’t like seeing an ugly IP address during development, you can &hellip;">
+  <meta name="description" content="How it’s gonna go Go over basics of Puppet and Vagrant Use Composer to grab symfony-standard-edition Create the VagrantFile Provisioning a Symfony 2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nater1067.github.io">
+  <link rel="canonical" href="http://nater1067.github.io/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Nate.Vegas" type="application/atom+xml">
@@ -75,67 +75,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/08/sexy-urls-for-vagrant-with-foxyproxy/">Sexy URLS for Vagrant With FoxyProxy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-08T13:09:54-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:09 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Use Foxy Proxy to make your life easier (Mac OSX/ Linux)</h2>
-
-
-<p>If you’re like me and you don’t like seeing an ugly IP address during development, you can use FoxyProxy to easily change the <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a> to vagrant.dev or any url of your choice.<br />
-<br/>
-Start off with either a Vagrant project of your own, or this basic Symfony 2 Vagrant project here: <a href="https://github.com/nater1067/Vagrant-Symfony-2">https://github.com/nater1067/Vagrant-Symfony-2</a> . Clone the project and follow the installation instructions. Run &ldquo;vagrant up&rdquo;.<br/>
-<br />
-Now install FoxyProxy.
-Firefox Users: <a href="https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/">https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/</a>
-Chrome Users: <a href="https://chrome.google.com/webstore/detail/foxyproxy-standard/gcknhkkoolaabfmlnjonogaaifnjlfnp?hl=en">https://chrome.google.com/webstore/detail/foxyproxy-standard/gcknhkkoolaabfmlnjonogaaifnjlfnp?hl=en</a>
-<br /></p>
-
-<p>After installing you should see a little fox somewhere on your browser. Click that fox.
-Make sure “Use proxies based on their pre-defined patterns and priorities” is selected.</p>
-
-<p><img src="/images/spinning-up-symfony-2-dev/enable-foxy.png" width="700" height="700" title="image" alt="images"></p>
-
-<p>Click on the new fox and select &ldquo;Options&rdquo;. Add a new proxy for 127.0.0.1 port 8080.</p>
-
-<p><img src="/images/spinning-up-symfony-2-dev/create-proxy.png" width="700" height="700" title="image" alt="images"></p>
-
-<p>Then add a new url pattern. Set “<em>symfony.dev</em>” as the url pattern, optionally set a pattern name, make sure whitelist urls and wildcards are selected. Press save, exit foxy proxy and navigate to <a href="http://symfony.dev.">http://symfony.dev.</a></p>
-
-<p><img src="/images/spinning-up-symfony-2-dev/whitelist-url.png" width="700" height="700" title="image" alt="images"></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/">Spinning Up Symfony 2 Development Environments With Vagrant</a></h1>
+      <h1 class="entry-title">Spinning Up Symfony 2 Development Environments With Vagrant</h1>
     
     
       <p class="meta">
@@ -151,7 +96,7 @@ Make sure “Use proxies based on their pre-defined patterns and priorities” i
   </header>
 
 
-  <div class="entry-content"><h2>How it’s gonna go</h2>
+<div class="entry-content"><h2>How it’s gonna go</h2>
 
 
 <ol>
@@ -187,13 +132,13 @@ When we use Vagrant to create new virtual development environments we avoid the 
 Let’s have Composer install a Symfony 2 project in a directory, let’s call the directory symfony2. Open up a terminal window and enter the following commands:
 </p></p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -s <a href="https://getcomposer.org/installer">https://getcomposer.org/installer</a> <span class="p">|</span> php
 </span><span class='line'>php composer.phar create-project symfony/framework-standard-edition symfony2 <span class="s1">&#39;dev-master&#39;</span>
 </span><span class='line'><span class="nb">cd </span>symfony2
-</span></code></pre></td></tr></table></div></figure>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>
 At the end of the composer create-project command, you should be prompted with “Some parameters are missing. Please provide them.”<br /></p>
 
@@ -203,22 +148,22 @@ At the end of the composer create-project command, you should be prompted with �
 
 <p>Because we are running a development environment let’s modify two lines in the web/.htaccess file. Replace occurrences of app with app_dev in these two location:<br />
 </p>
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='apacheconf'><span class='line'><span class="c"># /web/.htaccess</span>
 </span><span class='line'><span class="nb">RewriteRule</span> ^app_dev.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
 </span><span class='line'><span class="nb">RewriteRule</span> .? %{ENV:BASE}/app_dev.php [L]
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>While we are in the new Symfony project, let&rsquo;s disable some security checks in the app_dev.php file. Comment out the following lines:
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1"># /web/app_dev.php</span>
 </span><span class='line'><span class="c1">// header(&#39;HTTP/1.0 403 Forbidden&#39;);</span>
 </span><span class='line'><span class="c1">// exit(&#39;You are not allowed to access this file. Check &#39;.basename(<strong>FILE</strong>).&#39; for more information.&#39;);</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>We have Symfony 2, but we’re not going to be able to develop in this awesome framework until it’s running on Apache. Let’s have Vagrant do the heavy-lifting for this.</p>
 
@@ -226,15 +171,15 @@ At the end of the composer create-project command, you should be prompted with �
 <p>
 Vagrant is powerful out of the box, and there’s not a whole lot of configuration we have to do ourselves. Make sure you have the latest version of Vagrant installed. See <a href="http://www.vagrantup.com/downloads.html">http://www.vagrantup.com/downloads.html</a> for installation packages. Open the project directory in another terminal.
 </p>
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant init hashicorp/precise32
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><p>
 Then open up the newly created Vagrantfile in your favorite text editor (use PHPStorm!) and enable Puppet provisioning. Also, ensure port 8080 is forwarded to 80 on the VM. Vagrant is now ready to go.
 </p></p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -270,7 +215,7 @@ Then open up the newly created Vagrantfile in your favorite text editor (use PHP
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><h2>Provisioning with Puppet / Symfony’s Requirements</h2>
 <p>
@@ -282,7 +227,7 @@ Let’s face it.. Symfony 2 is amazing and all powerful, but not the fastest fra
 Since we are keeping this Puppet script very basic for now, all we need to to install Apache, php, modrewrite and mysql. Create a folder called manifests in our project and a file named sites.pp in the new folder.
 </p></p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -354,11 +299,11 @@ Since we are keeping this Puppet script very basic for now, all we need to to in
 </span><span class='line'>  <span class="k">notify</span> <span class="o">=&gt;</span> <span class="k">Service</span><span class="p">[</span><span class="na">apache2</span><span class="p">],</span>
 </span><span class='line'>  <span class="na">require</span> <span class="o">=&gt;</span> <span class="k">Package</span><span class="p">[</span><span class="s">&#39;apache2&#39;</span><span class="p">]</span>
 </span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><h3>Set up a new VirtualHost</h3>
 First we need to point /var/www to our /vagrant directory.
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -376,10 +321,10 @@ First we need to point /var/www to our /vagrant directory.
 </span><span class='line'>  <span class="na">replace</span> <span class="o">=&gt;</span> <span class="na">yes</span><span class="p">,</span>
 </span><span class='line'>  <span class="na">force</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
 </span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Let’s set up a simple vhost pointing to our symfony project’s web directory. We should include the vhost in our git repository. Let’s place a file named vhost.conf in the manifests/assets folder.
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -407,11 +352,11 @@ First we need to point /var/www to our /vagrant directory.
 </span><span class='line'>    <span class="nb">ErrorLog</span> <span class="sx">/var/log/apache2/error.log</span>
 </span><span class='line'>    <span class="nb">CustomLog</span> <span class="sx">/var/log/apache2/access.log</span> combined
 </span><span class='line'><span class="nt">&lt;/VirtualHost&gt;</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Now we just have to tell Puppet to create a symlink to that file in the Apache sites-available directory.</p>
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -429,12 +374,12 @@ First we need to point /var/www to our /vagrant directory.
 </span><span class='line'>  <span class="na">replace</span> <span class="o">=&gt;</span> <span class="na">yes</span><span class="p">,</span>
 </span><span class='line'>  <span class="na">force</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
 </span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><h3>Set Apache to run as the Vagrant user</h3>
 Because this is a development-only environment we can use a little hack I stumbled upon on Jeremy Kendall’s blog (<a href="http://jeremykendall.net/2013/08/09/vagrant-synced-folders-permissions/">http://jeremykendall.net/2013/08/09/vagrant-synced-folders-permissions/</a>).
 All we need to do is change the Apache user and group to use Vagrant’s user and group. This way Apache can write to cache and log directories with no problem!
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -474,7 +419,7 @@ All we need to do is change the Apache user and group to use Vagrant’s user an
 </span><span class='line'>  <span class="na">require</span> <span class="o">=&gt;</span> <span class="k">Package</span><span class="p">[</span><span class="s">&quot;apache2&quot;</span><span class="p">],</span>
 </span><span class='line'>  <span class="k">notify</span>  <span class="o">=&gt;</span> <span class="k">Service</span><span class="p">[</span><span class="s">&quot;apache2&quot;</span><span class="p">],</span>
 </span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Now run “vagrant up” from your project directory and watch as your Symfony 2 application comes to life! Navigate to <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a> to see a Symfony 2 welcome page.</p>
 
@@ -485,18 +430,52 @@ Now we have a working Symfony 2 project running on a virtual machine we can deve
 
 <p>Do you know of any ways to improve the project we just created? If so please leave a comment so I can update this post based off your feedback.</p>
 </div>
-  
-  
 
 
-    </article>
+  <footer>
+    <p class="meta">
+      
   
-  <div class="pagination">
+
+<span class="byline author vcard">Posted by <span class="fn">Nate Turner</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T14:59:49-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:59 pm</span></time>
+      
+
+
+    </p>
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nater1067.github.io/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/" data-via="thenewjamesbond" data-counturl="http://nater1067.github.io/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/09/08/sexy-urls-for-vagrant-with-foxyproxy/" title="Next Post: Sexy URLS For Vagrant With FoxyProxy">Sexy URLS For Vagrant With FoxyProxy &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -559,6 +538,7 @@ Now we have a working Symfony 2 project running on a virtual machine we can deve
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -573,7 +553,10 @@ Now we have a working Symfony 2 project running on a virtual machine we can deve
       var disqus_shortname = 'natevegas';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nater1067.github.io/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/';
+        var disqus_url = 'http://nater1067.github.io/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

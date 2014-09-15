@@ -1,105 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Nate.Vegas</title>
-  <meta name="author" content="Nate Turner">
-
-  
-  <meta name="description" content="Use Foxy Proxy to make your life easier (Mac OSX/ Linux) If you’re like me and you don’t like seeing an ugly IP address during development, you can &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://nater1067.github.io">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Nate.Vegas" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-54653096-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Nate.Vegas</a></h1>
-  
-    <h2>Learn PHP</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="https://www.google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:nater1067.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+  <title><![CDATA[Nate.Vegas]]></title>
+  <link href="http://nater1067.github.io/atom.xml" rel="self"/>
+  <link href="http://nater1067.github.io/"/>
+  <updated>2014-09-15T15:57:21-07:00</updated>
+  <id>http://nater1067.github.io/</id>
+  <author>
+    <name><![CDATA[Nate Turner]]></name>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/08/sexy-urls-for-vagrant-with-foxyproxy/">Sexy URLS for Vagrant With FoxyProxy</a></h1>
-    
-    
-      <p class="meta">
-        
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
-
-
-
-<time class='entry-date' datetime='2014-09-08T13:09:54-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:09 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Use Foxy Proxy to make your life easier (Mac OSX/ Linux)</h2>
+  
+  <entry>
+    <title type="html"><![CDATA[Sexy URLS for Vagrant With FoxyProxy]]></title>
+    <link href="http://nater1067.github.io/blog/2014/09/08/sexy-urls-for-vagrant-with-foxyproxy/"/>
+    <updated>2014-09-08T13:09:54-07:00</updated>
+    <id>http://nater1067.github.io/blog/2014/09/08/sexy-urls-for-vagrant-with-foxyproxy</id>
+    <content type="html"><![CDATA[<h2>Use Foxy Proxy to make your life easier (Mac OSX/ Linux)</h2>
 
 
 <p>If you’re like me and you don’t like seeing an ugly IP address during development, you can use FoxyProxy to easily change the <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a> to vagrant.dev or any url of your choice.<br />
@@ -114,44 +33,24 @@ Chrome Users: <a href="https://chrome.google.com/webstore/detail/foxyproxy-stand
 <p>After installing you should see a little fox somewhere on your browser. Click that fox.
 Make sure “Use proxies based on their pre-defined patterns and priorities” is selected.</p>
 
-<p><img src="/images/spinning-up-symfony-2-dev/enable-foxy.png" width="700" height="700" title="image" alt="images"></p>
+<p><img src="http://nater1067.github.io/images/spinning-up-symfony-2-dev/enable-foxy.png" width="700" height="700" title="image" alt="images"></p>
 
 <p>Click on the new fox and select &ldquo;Options&rdquo;. Add a new proxy for 127.0.0.1 port 8080.</p>
 
-<p><img src="/images/spinning-up-symfony-2-dev/create-proxy.png" width="700" height="700" title="image" alt="images"></p>
+<p><img src="http://nater1067.github.io/images/spinning-up-symfony-2-dev/create-proxy.png" width="700" height="700" title="image" alt="images"></p>
 
 <p>Then add a new url pattern. Set “<em>symfony.dev</em>” as the url pattern, optionally set a pattern name, make sure whitelist urls and wildcards are selected. Press save, exit foxy proxy and navigate to <a href="http://symfony.dev.">http://symfony.dev.</a></p>
 
-<p><img src="/images/spinning-up-symfony-2-dev/whitelist-url.png" width="700" height="700" title="image" alt="images"></p>
-</div>
+<p><img src="http://nater1067.github.io/images/spinning-up-symfony-2-dev/whitelist-url.png" width="700" height="700" title="image" alt="images"></p>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/">Spinning Up Symfony 2 Development Environments With Vagrant</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-25T14:59:49-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:59 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>How it’s gonna go</h2>
+  <entry>
+    <title type="html"><![CDATA[Spinning Up Symfony 2 Development Environments With Vagrant]]></title>
+    <link href="http://nater1067.github.io/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/"/>
+    <updated>2014-08-25T14:59:49-07:00</updated>
+    <id>http://nater1067.github.io/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant</id>
+    <content type="html"><![CDATA[<h2>How it’s gonna go</h2>
 
 
 <ol>
@@ -484,119 +383,7 @@ Now we have a working Symfony 2 project running on a virtual machine we can deve
 <p>The source can be found on my Github account here: <a href="https://github.com/nater1067/Vagrant-Symfony-2">https://github.com/nater1067/Vagrant-Symfony-2</a> .</p>
 
 <p>Do you know of any ways to improve the project we just created? If so please leave a comment so I can update this post based off your feedback.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Nate Turner</h1>
-  <p>Spreading the gospel of modern web development. Especially frameworks, test-driven design, devops, tooling and design patterns.</p>
-  <p>When he's not programming he's traveling, fine dining or binge watching some zombie show on Netflix.</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/09/08/sexy-urls-for-vagrant-with-foxyproxy/">Sexy URLS for Vagrant With FoxyProxy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/25/spinning-up-symfony-2-development-environments-with-vagrant/">Spinning Up Symfony 2 Development Environments With Vagrant</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <!--<ul id="gh_repos">-->
-    <!--<li class="loading">Status updating...</li>-->
-  <!--</ul>-->
-  
-  <a href="https://github.com/nater1067">@nater1067</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'nater1067',
-            count: 1,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-<section>
-    <h1>Latest Tweets</h1>
-    <a class="twitter-timeline" href="https://twitter.com/thenewjamesbond" data-widget-id="509435332794667008">Tweets by @thenewjamesbond</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</section>
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Nate Turner -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'natevegas';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-
-
-
-
-<section>
-    <h1>Latest Tweets</h1>
-    <a class="twitter-timeline" href="https://twitter.com/thenewjamesbond" data-widget-id="509435332794667008">Tweets by @thenewjamesbond</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</section>
-
-
-
-
-
-</body>
-</html>
+</feed>
