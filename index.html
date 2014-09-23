@@ -9,7 +9,7 @@
   <meta name="author" content="Nate Turner">
 
   
-  <meta name="description" content="Use Foxy Proxy to make your life easier (Mac OSX/ Linux) If you’re like me and you don’t like seeing an ugly IP address during development, you can &hellip;">
+  <meta name="description" content="Behavior-Driven Development With Behat and Mink Unit testing is not the only practice software engineers should use to ensure a project is operating &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,254 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/22/behavior-driven-development-with-behat/">Behavior-Driven Development With Behat</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-22T13:38:03-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>1:38 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Behavior-Driven Development With Behat and Mink</h2>
+
+
+<p>Unit testing is not the only practice software engineers should use to ensure a project is operating correctly. Behavior-driven development has been growing in popularity since 2008. In short, BDD starts with a “story.” Whoever is in charge of designing the software’s flow writes use-cases for features in human-readable language. Tests are then run using headless browsers and other automation tools to ensure the story can be execute properly.<br /></p>
+
+<p>A short story in Gherkin, Behat&rsquo;s markup language, might look like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='Cucumber'><span class='line'><span class="k">Scenario:</span><span class="nf"> Search for red hat</span>
+</span><span class='line'><span class="k">    Given </span><span class="nf">I am on &quot;</span><span class="s">/search</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">And </span><span class="nf">I fill in &quot;</span><span class="s">search_input</span><span class="nf">&quot; with &quot;</span><span class="s">red hat</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">And </span><span class="nf">press &quot;</span><span class="s">submit</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">Then </span><span class="nf">I should see &quot;</span><span class="s">red hat - The best clothing item you will ever buy.</span><span class="nf">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This story looks eerily similar to a functional requirements document because, well, that&rsquo;s what it is. Typically someone doing quality assurance would have to manually follow this scenario every time a new feature or bug fix has been implemented in order to properly regression test. But Behat can automatically test these scenario in a variety of browsers, headless or not. This is great for testing complex features like those involving AJAX requests. Mink defines how Behat should translate the Gherkin steps into browser commands in order to test the site. We can also define our own custom steps here.<br /></p>
+
+<p>Let&rsquo;s take a look at how we can implement Behat to test an e-commerce site.</p>
+
+<h2>Set Up</h2>
+
+
+<p>Clone the simple e-commerce site and checkout the shop-basic tag. This post assumes you are working in either OSX or Linux.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone https://github.com/nater1067/Shop-Top.git
+</span><span class='line'><span class="nb">cd </span>Shop-Top
+</span><span class='line'>git checkout -b shop-basic
+</span><span class='line'>curl -sS https://getcomposer.org/installer <span class="p">|</span> php
+</span><span class='line'>php composer.phar install
+</span><span class='line'>vagrant up
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Press enter after the composer install for each field to keep default values. Now you should be able to navigate to <a href="http://127.0.0.1:8080/search">http://127.0.0.1:8080/search</a> to see a working ecommerce site. Try buying a red hat to see how the site works. (Note: You will not be charged for the any red hats on this site.)</p>
+
+<h2>Including Behat and Mink Libraries</h2>
+
+
+<p>We need to add a few dependencies to our project using composer. This took a little time to figure out, and at the time of writing this post works. However be warned - you may need to adjust the version numbers in order to get this working in the future.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="err">#</span> <span class="err">composer.json</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="err">#</span> <span class="err">When</span> <span class="err">you</span> <span class="err">see</span> <span class="nt">&quot;...&quot;</span> <span class="err">it</span> <span class="err">means</span> <span class="err">there</span> <span class="err">may</span> <span class="err">be</span> <span class="err">code</span> <span class="err">here.</span>
+</span><span class='line'>    <span class="err">#</span> <span class="err">Don&#39;t</span> <span class="err">delete</span> <span class="err">anything</span> <span class="err">unless</span> <span class="err">it&#39;s</span> <span class="err">mentioned</span> <span class="err">in</span> <span class="err">a</span> <span class="err">post.</span>
+</span><span class='line'>    <span class="err">#</span> <span class="err">...</span>
+</span><span class='line'>    <span class="s2">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="err">#</span> <span class="err">...</span>
+</span><span class='line'>        <span class="nt">&quot;behat/symfony2-extension&quot;</span><span class="p">:</span> <span class="s2">&quot;~1.1&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;behat/mink-extension&quot;</span><span class="p">:</span> <span class="s2">&quot;~1.3&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;behat/mink-selenium2-driver&quot;</span><span class="p">:</span> <span class="s2">&quot;~1.1&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;behat/mink-goutte-driver&quot;</span><span class="p">:</span> <span class="s2">&quot;~1.0&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run composer update to download the the Behat and Mink libraries. Then create the necessary Behat files.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>php composer.phar update
+</span><span class='line'>bin/behat --init
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This creates a new directory, &ldquo;features&rdquo;, which holds our Gherkin and Behat FeatureContext. Modify the FeatureContext to extend MinkContext. This allows us to leverage the pre-defined steps included in Mink.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1"># features/bootstrap/FeatureContext.php</span>
+</span><span class='line'><span class="k">use</span> <span class="nx">Behat\MinkExtension\Context\MinkContext</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">FeatureContext</span> <span class="k">extends</span> <span class="nx">MinkContext</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="cm">/* ... */</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We should also create a new file in the project root directory - behat.yml.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># behat.yml</span>
+</span><span class='line'><span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">extensions</span><span class="p-Indicator">:</span>
+</span><span class='line'>        <span class="l-Scalar-Plain">Behat\MinkExtension\Extension</span><span class="p-Indicator">:</span>
+</span><span class='line'>            <span class="l-Scalar-Plain">base_url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://127.0.0.1:8080</span>
+</span><span class='line'>            <span class="l-Scalar-Plain">goutte</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+</span><span class='line'>            <span class="l-Scalar-Plain">selenium2</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Creating the Gherkin Story</h2>
+
+
+<p>Time to write our features in human terms. Create two new files: features/search.feature and features/buy.feature.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='Cucumber'><span class='line'><span class="c"># features/search.feature</span><span class="nf"></span>
+</span><span class='line'><span class="k">Feature:</span><span class="nf"> Clothes Search</span>
+</span><span class='line'><span class="nf">  In order to search for clothes</span>
+</span><span class='line'><span class="nf">  As a shopper</span>
+</span><span class='line'><span class="nf">  I need to enter a search query and press submit</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Search for red hat</span>
+</span><span class='line'><span class="k">    Given </span><span class="nf">I am on &quot;</span><span class="s">/search</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">And </span><span class="nf">I fill in &quot;</span><span class="s">search_input</span><span class="nf">&quot; with &quot;</span><span class="s">red hat</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">And </span><span class="nf">press &quot;</span><span class="s">submit</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">Then </span><span class="nf">I should see &quot;</span><span class="s">red hat - The best clothing item you will ever buy.</span><span class="nf">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Search for empty string</span>
+</span><span class='line'><span class="k">    Given </span><span class="nf">I am on &quot;</span><span class="s">/search</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">And </span><span class="nf">press &quot;</span><span class="s">submit</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">Then </span><span class="nf">I should not see &quot;</span><span class="s">Results</span><span class="nf">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='Cucumber'><span class='line'><span class="c"># features/buy.feature</span><span class="nf"></span>
+</span><span class='line'><span class="k">Feature:</span><span class="nf"> Buy Clothing Item</span>
+</span><span class='line'><span class="nf">  In order to buy a clothing item</span>
+</span><span class='line'><span class="nf">  As a shopper</span>
+</span><span class='line'><span class="nf">  I need to press buy next to an item</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">  </span><span class="k">Scenario:</span><span class="nf"> Buy red hat</span>
+</span><span class='line'><span class="k">    Given </span><span class="nf">I am on &quot;</span><span class="s">/search</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">And </span><span class="nf">I fill in &quot;</span><span class="s">search_input</span><span class="nf">&quot; with &quot;</span><span class="s">red hat</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">And </span><span class="nf">I press &quot;</span><span class="s">submit</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">Then </span><span class="nf">I press &quot;</span><span class="s">buy_redhat</span><span class="nf">&quot;</span>
+</span><span class='line'><span class="nf">    </span><span class="k">Then </span><span class="nf">I should see &quot;</span><span class="s">You purchased 1 red hat!</span><span class="nf">&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>These files describe, in fairly simple terms, what the application should do. We should be able to search for a red hat, and see the description in the results.</p>
+
+<h2>Running Behat</h2>
+
+
+<p>Now that we have created a couple of Gherkin stories, we can run Behat to test our site&rsquo;s behavior in a headless browser.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bin/behat
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Behat is now using a headless browser to confirm whether our app adheres to the steps we&rsquo;ve defined in the .feature files. We should see our stories outputted to the terminal. If everything works we should see a lot of green, and a summary of successful scenarios and steps.<br /></p>
+
+<p>The completed source code can be found on the behat branch of the Shop-Top repository on GitHub here: <a href="https://github.com/nater1067/Shop-Top/tree/behat">https://github.com/nater1067/Shop-Top/tree/behat</a> .</p>
+
+<h2>What Comes Next</h2>
+
+
+<p>Now that you&rsquo;ve got Behat running successfully within a Symfony 2 application, it&rsquo;s time to get your hands dirty with more advanced test behavior-driven design. You&rsquo;ve seen very simple examples of Behat tests, but Behat can do so much more than check simple forms. Try adding bundle-specific features with the Symfony 2 Behat bundle. Add some tests which check front-end functionality such as AJAX features. Tons of information can be found in the Behat docs at <a href="http://docs.behat.org">http://docs.behat.org</a> .<br /></p>
+
+<p>Have an improvement for this post? What additional Behat functionality would you like included in this post? Please comment below.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -507,6 +755,10 @@ Now we have a working Symfony 2 project running on a virtual machine we can deve
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/22/behavior-driven-development-with-behat/">Behavior-Driven Development With Behat</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/08/sexy-urls-for-vagrant-with-foxyproxy/">Sexy URLS for Vagrant With FoxyProxy</a>
